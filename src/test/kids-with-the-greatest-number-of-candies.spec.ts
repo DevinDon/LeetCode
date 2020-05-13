@@ -14,7 +14,10 @@ describe('拥有最多糖果的孩子', () => {
   ];
 
   for (const test of tests) {
-    it(`input: ${JSON.stringify(test.param)}\toutput: ${JSON.stringify(test.return)}`, () => expect(kidsWithCandies.apply(undefined, test.param)).toEqual(test.return));
+    it(
+      `input: ${JSON.stringify(test.param)}\toutput: ${JSON.stringify(test.return)}`,
+      () => expect(kidsWithCandies.apply(undefined, test.param)).toEqual(test.return)
+    );
   }
 
 });
