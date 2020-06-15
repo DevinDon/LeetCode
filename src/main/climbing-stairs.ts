@@ -28,10 +28,20 @@
  * @return {number}
  */
 export function climbStairs(n: number): number {
-  return cache[n] || (cache[n] = climbStairs(n - 1) + climbStairs(n - 2));
+  if (n === 1) { return 1; }
+  let first = 1;
+  let last = 2;
+  for (let i = 3; i <= n; i++) {
+    [first, last] = [last, first + last];
+  }
+  return last;
 }
 
-const cache = {
-  1: 1,
-  2: 2
-};
+// export function climbStairs(n: number): number {
+//   return cache[n] || (cache[n] = climbStairs(n - 1) + climbStairs(n - 2));
+// }
+
+// const cache = {
+//   1: 1,
+//   2: 2
+// };
