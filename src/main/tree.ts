@@ -14,15 +14,18 @@ export function generate(inputs: (number | undefined)[]) {
       queue.push(inputs.shift() as number);
     }
     deepth++;
-    const tempQueue: TreeNode[] = [];
+    const tempQueue: (TreeNode | undefined)[] = [];
     for (const node of queue) {
-      tempQueue.push({ value: node });
+      node
+        ? tempQueue.push({ value: node })
+        : tempQueue.push(undefined);
     }
     for (let j = 0; j < trees.length; j++) {
+      if (!trees[j]) { continue; }
       trees[j].left = tempQueue[j * 2];
       trees[j].right = tempQueue[j * 2 + 1];
     }
-    trees = tempQueue;
+    trees = tempQueue as any;
   }
   return root;
 }
@@ -75,10 +78,10 @@ export function bfs(root: TreeNode) {
 const inputValue = [1, 2, 3, 4, 5, undefined, 7];
 const treeRoot = generate(inputValue);
 
-console.log(`Input: ${inputValue}`);
+// console.log(`Input: ${inputValue}`);
 
-console.log(`Pre-order : ${preOrder(treeRoot)}`);
-console.log(`Mid-order : ${midOrder(treeRoot)}`);
-console.log(`Post-order: ${postOrder(treeRoot)}`);
+// console.log(`Pre-order : ${preOrder(treeRoot)}`);
+// console.log(`Mid-order : ${midOrder(treeRoot)}`);
+// console.log(`Post-order: ${postOrder(treeRoot)}`);
 
-console.log(`BFS: ${bfs(treeRoot).deepth} | ${bfs(treeRoot).result}`);
+// console.log(`BFS: ${bfs(treeRoot).deepth} | ${bfs(treeRoot).result}`);
