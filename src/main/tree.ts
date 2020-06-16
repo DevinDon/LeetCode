@@ -1,11 +1,11 @@
 export interface TreeNode<T = any> {
-  value: T;
+  val: T;
   left?: TreeNode<T>;
   right?: TreeNode<T>;
 }
 
 export function generate(inputs: (number | undefined)[]) {
-  const root: TreeNode = { value: inputs.shift() };
+  const root: TreeNode = { val: inputs.shift() };
   let deepth = 1;
   let trees: TreeNode[] = [root];
   while (inputs.length) {
@@ -17,7 +17,7 @@ export function generate(inputs: (number | undefined)[]) {
     const tempQueue: (TreeNode | undefined)[] = [];
     for (const node of queue) {
       node
-        ? tempQueue.push({ value: node })
+        ? tempQueue.push({ val: node })
         : tempQueue.push(undefined);
     }
     for (let j = 0; j < trees.length; j++) {
@@ -33,7 +33,7 @@ export function generate(inputs: (number | undefined)[]) {
 export function preOrder(root?: TreeNode): number[] {
   if (!root) { return []; }
   const arr: number[] = [];
-  root.value && arr.push(root.value);
+  root.val && arr.push(root.val);
   arr.push(...preOrder(root.left));
   arr.push(...preOrder(root.right));
   return arr;
@@ -43,7 +43,7 @@ export function midOrder(root?: TreeNode) {
   if (!root) { return []; }
   const arr: number[] = [];
   arr.push(...midOrder(root.left));
-  root.value && arr.push(root.value);
+  root.val && arr.push(root.val);
   arr.push(...midOrder(root.right));
   return arr;
 }
@@ -53,7 +53,7 @@ export function postOrder(root?: TreeNode) {
   const arr: number[] = [];
   arr.push(...postOrder(root.left));
   arr.push(...postOrder(root.right));
-  root.value && arr.push(root.value);
+  root.val && arr.push(root.val);
   return arr;
 }
 
@@ -65,7 +65,7 @@ export function bfs(root: TreeNode) {
     const temp: (TreeNode | undefined)[] = [];
     for (const node of queue) {
       if (!node) { continue; }
-      result.push(node.value || 'undefined');
+      result.push(node.val || 'undefined');
       temp.push(node.left);
       temp.push(node.right);
     }
