@@ -1,4 +1,4 @@
-import { TreeNode, generate } from './tree';
+import { TreeNode } from './tree';
 
 /**
  * 给定一个二叉树，判断其是否是一个有效的二叉搜索树。
@@ -38,16 +38,26 @@ import { TreeNode, generate } from './tree';
  * @param {TreeNode} root
  * @return {boolean}
  */
-export function isValidBST(root?: TreeNode): boolean {
-  return cursr(root, Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER);
+export function isValidBST(root?: TreeNode<number>): boolean {
+  const solution = new Solution();
+  return solution.recur(root);
 }
 
-function cursr(root: TreeNode | undefined, upper: number, lower: number): boolean {
-  if (!root) { return true; }
-  if (!(root.val < upper && root.val > lower)) { return false; }
-  return cursr(root.left, root.val, Number.MIN_SAFE_INTEGER) && cursr(root.right, Number.MAX_SAFE_INTEGER, root.val);
+class Solution {
+
+  private parent: number = Number.MIN_SAFE_INTEGER;
+
+  public recur(node?: TreeNode<number>): boolean {
+    if (!node) { return true; }
+    const left = this.recur(node.left);
+    const current = node.val > this.parent;
+    this.parent = node.val;
+    const right = this.recur(node.right);
+    return left && current && right;
+  }
+
 }
 
-const root = generate([10, 5, 15, undefined, undefined, 6, 20]);
-const result = isValidBST(root);
-console.log(result);
+// const root = generate([10, 5, 15, undefined, undefined, 6, 20]);
+// const result = isValidBST(root);
+// console.log(result);
